@@ -1,5 +1,7 @@
 import streamlit as st
 
+server = st.server.server.Server.get_current()
+
 st.title("Streamlit Survey")
 st.markdown("""
 <style>
@@ -44,14 +46,18 @@ st.write(get_iq_message(iq))
 
 submitted = st.button("Submit")
 
-if 'messages' not in st.session_state:
-    st.session_state.messages = []
-
+if 'shared_data' not in st.session_state:
+    st.session_state.shared_data = {'messages': []}
+    
+def add_message(message):
+    st.session_state.shared_data['messages'].append(message)
+    
 st.markdown("---")
 
 if submitted:
     if username:
-        st.session_state.messages.append(f"{username} assigned Elliot an IQ of: {iq}")
+        add_message(f"{username} assigned Elliot an IQ of: {iq}")
         st.write("\n\n".join(st.session_state.messages))
+        server.broadcast_message({'type': 'update_shared_data', 'data': st.session_state.shared_data})
     else:
         st.warning("Username is required.")
