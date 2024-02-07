@@ -10,4 +10,4 @@ sl.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-sl.header("Hello Nikola")
+sl.header("Welcom to our basic Streamlit app")
