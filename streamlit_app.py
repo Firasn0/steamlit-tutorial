@@ -1,6 +1,6 @@
 import streamlit as st
 
-server = st.server.server.Server.get_current()
+server = st.server.Server.get_current()
 
 st.title("Streamlit Survey")
 st.markdown("""
